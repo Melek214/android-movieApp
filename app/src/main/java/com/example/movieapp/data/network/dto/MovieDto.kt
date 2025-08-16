@@ -6,5 +6,13 @@ data class MovieDto( //Burada API’den gelen JSON verilerini karşılayacak DTO
     val overview: String,
     val poster_path: String,
     val release_date: String,
-    val vote_average: Double
+    val vote_average: Double,
+    val runtime: Int?,
+    val genres: List<GenreDto>?
 )
+
+data class GenreDto(
+    val id: Int,
+    val name: String
+)
+

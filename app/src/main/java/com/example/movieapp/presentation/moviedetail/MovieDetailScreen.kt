@@ -35,6 +35,12 @@ fun MovieDetailScreen(
         )
     }
 
+    fun formatRuntime(minutes: Int): String {
+        val hours = minutes / 60
+        val mins = minutes % 60
+        return "${hours}h ${mins}m"
+    }
+
     val activity = LocalContext.current as? ComponentActivity
     val backDispatcher = activity?.onBackPressedDispatcher
 
@@ -98,7 +104,7 @@ fun MovieDetailScreen(
                             Text(
                                 text = "IMDB: ${String.format("%.1f", m.voteAverage)}",
                                 style = MaterialTheme.typography.bodyMedium.copy(color = Color.Black),
-                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 3.dp)
                             )
                         }
                     }
@@ -107,24 +113,34 @@ fun MovieDetailScreen(
                         horizontalArrangement = Arrangement.spacedBy(8.dp),
                         modifier = Modifier.padding(horizontal = 8.dp)
                     ) {
-                        Text(
-                            text = "•Bilim-Kurgu, Macera",
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                        Row(verticalAlignment = Alignment.CenterVertically) {
-                            Icon(
-                                imageVector = Icons.Default.AccessTime,
-                                contentDescription = "Süre",
-                                modifier = Modifier.size(18.dp) // ikon boyutu
+                        // Kategori satırı
+                        if (!m.genres.isNullOrEmpty()) {
+                            Text(
+                                text = "• " + m.genres.joinToString(", "),
+                                style = MaterialTheme.typography.bodySmall,
                             )
-                            Spacer(modifier = Modifier.width(4.dp)) // ikon ile yazı arası boşluk
-                            Text(text = "1h 55m")
+                        }
+
+                        // Süre satırı
+                        m.runtime?.let { runtime ->
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    imageVector = Icons.Default.AccessTime,
+                                    contentDescription = "Süre",
+                                    modifier = Modifier.size(18.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = formatRuntime(runtime),
+                                    style = MaterialTheme.typography.bodySmall
+                                )
+                            }
                         }
                         // 🚀 Fragman Butonu
                         Button(
                             onClick = { /* Fragman açma işlemi burada yapılacak */ },
-                            modifier = Modifier.height(36.dp),
-                            contentPadding = PaddingValues(horizontal = 8.dp),
+                            modifier = Modifier.height(25.dp),
+                            contentPadding = PaddingValues(horizontal = 5.dp),
                             shape = RoundedCornerShape(18.dp)
                         ) {
                             Icon(

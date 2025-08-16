@@ -17,6 +17,8 @@ class MovieRepositoryImpl(
                 posterPath = dto.poster_path,
                 releaseDate = dto.release_date,
                 voteAverage = dto.vote_average,
+                runtime = dto.runtime,
+                genres = dto.genres?.map { it.name }
 
             )
         }
@@ -31,6 +33,8 @@ class MovieRepositoryImpl(
             posterPath = dto.poster_path,
             releaseDate = dto.release_date,
             voteAverage = dto.vote_average,
+            runtime = dto.runtime,
+            genres = dto.genres?.map { it.name }
         )
     }
 }
